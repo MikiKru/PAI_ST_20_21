@@ -27,7 +27,7 @@ public class BlogController {
     ){
         return String.format("name = %s number = %d", userName, number);
     }
-    @PostMapping("/user/registration")
+    @PostMapping("/users/registration")
     public User registerUser(
         @RequestParam("name") String name,
         @RequestParam("lastName") String lastName,
@@ -36,7 +36,7 @@ public class BlogController {
     ){
         return userService.insertUser(new User(name,lastName,email,password, LocalDateTime.now(), "",false));
     }
-    @GetMapping("/uses")
+    @GetMapping("/users")
     public List<User> getAllUsers(){
         return userService.selectUsers();
     }
@@ -45,5 +45,11 @@ public class BlogController {
             @PathVariable("userId") int userId
     ){
         return userService.activateUser(userId);
+    }
+    @DeleteMapping("/users/delete")
+    public boolean deleteUserById(
+            @RequestParam("userId") int userId
+    ){
+        return userService.deleteUserById(userId);
     }
 }

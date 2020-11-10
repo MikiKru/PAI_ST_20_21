@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service     // klasa implementująca logikę biznesową
 public class UserService {
@@ -39,5 +40,14 @@ public class UserService {
             isActivated = true;
         }
         return isActivated;
+    }
+    // DELETE FROM users WHERE user_id = ?;
+    public boolean deleteUserById(int userId){
+        AtomicBoolean isDeleted = new AtomicBoolean(false);
+        getUserById(userId).ifPresent(user -> {
+            userRepository.deleteById(userId);
+            isDeleted.set(true);
+        });
+        return isDeleted.get();
     }
 }
