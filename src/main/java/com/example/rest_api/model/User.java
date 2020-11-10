@@ -26,10 +26,20 @@ public class User {
     private String email;
     private String password;
     @Column(name = "registration_time")                 // edycja właściwości kolumny
-    private LocalDateTime registrationDateTime = LocalDateTime.now();
+    private LocalDateTime registrationDateTime;
     @Type(type = "text")
     private String description;
-    private boolean status = true;
+    private boolean status;
 //    @Transient                                          // wykluczenie z mapowania ORM
 //    private String secretCode;
+
+    public User(String name, String lastName, String email, String password, LocalDateTime registrationDateTime, String description, boolean status) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.registrationDateTime = registrationDateTime;
+        this.description = description;
+        this.status = status;
+    }
 }
