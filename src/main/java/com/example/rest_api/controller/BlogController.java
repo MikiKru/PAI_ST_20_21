@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
 public class BlogController {
@@ -35,5 +36,14 @@ public class BlogController {
     ){
         return userService.insertUser(new User(name,lastName,email,password, LocalDateTime.now(), "",false));
     }
-
+    @GetMapping("/uses")
+    public List<User> getAllUsers(){
+        return userService.selectUsers();
+    }
+    @PutMapping("/users/activate/id={userId}")
+    public boolean activateUser(
+            @PathVariable("userId") int userId
+    ){
+        return userService.activateUser(userId);
+    }
 }
