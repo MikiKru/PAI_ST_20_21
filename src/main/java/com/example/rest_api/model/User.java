@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity          // kolumnach takich jak pola klasowe
 @Data            // auto-generowanie getters/setters/toString
 @AllArgsConstructor // auto-generacja konstruktora z wszystkimi polami w argymencie
-@NoArgsConstructor  // auto-generacja kontrukotra bezargumentowego
+@NoArgsConstructor  // auto-generacja kontruktora bezargumentowego
 //@Getter          // auto-generowanie getters
 //@Setter          // auto-generowanie Setters
 //@ToString          // auto-generowanie metody toString()
@@ -25,11 +25,11 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @Column(name = "registraton_time")                 // edycja właściwości kolumny
+    @Column(name = "registration_time")                 // edycja właściwości kolumny
     private LocalDateTime registrationDateTime = LocalDateTime.now();
     @Type(type = "text")
     private String description;
     private boolean status = true;
-    @Transient                                          // wykluczenie z mapowania ORM
-    private String secretCode;
+//    @Transient                                          // wykluczenie z mapowania ORM
+//    private String secretCode;
 }

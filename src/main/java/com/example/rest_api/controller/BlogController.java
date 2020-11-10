@@ -1,10 +1,17 @@
 package com.example.rest_api.controller;
 
+import com.example.rest_api.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
 public class BlogController {
+    UserService userService;
+    @Autowired
+    public BlogController(UserService userService) {
+        this.userService = userService;
+    }
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
         return "Hello world!";
