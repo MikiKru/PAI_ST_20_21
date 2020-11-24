@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 //@Getter          // auto-generowanie getters
 //@Setter          // auto-generowanie Setters
 //@ToString          // auto-generowanie metody toString()
-@Table(name = "users")
+@Table(name = "users", indexes = @Index(name = "rdt", columnList = "registration_time"))
 public class User {
     @Id                                                 // klucz główny
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto inkrementacja dot tylko tabelki
