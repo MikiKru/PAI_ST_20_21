@@ -5,6 +5,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 // adnotacja ORM Object Relationship Mapping
                  // Utworzona zostaje tableka MySQL o nazwie user i
@@ -32,6 +34,14 @@ public class User {
     private boolean status;
 //    @Transient                                          // wykluczenie z mapowania ORM
 //    private String secretCode;
+    @ManyToMany(fetch = FetchType.EAGER)                  // N : M
+    @JoinTable(                                           // adnotacja tworzy tabelkę relacji
+            name = "users_to_roles",                            // nazwa tabeli
+            joinColumns = @JoinColumn(name = "user_id"),        // FK z tab users
+            inverseJoinColumns = @JoinColumn(name = "role_id")  // FK z tab roles
+    )
+    private Set<Role> roles = new HashSet<>();
+
 
     public User(String name, String lastName, String email, String password, LocalDateTime registrationDateTime, String description, boolean status) {
         this.name = name;
