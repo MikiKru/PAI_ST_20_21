@@ -1,11 +1,15 @@
 package com.example.rest_api.service;
 
+import com.example.rest_api.model.Role;
 import com.example.rest_api.model.User;
+import com.example.rest_api.repository.RoleRepository;
 import com.example.rest_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,11 +19,21 @@ public class UserService {
     // wstrzykiwanie zależności - DI
                   // kontener springa zarządza repozytorium i
     @Autowired    // umożliwia nam dostęp wtedy gdy jest potrzebny
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     // INSERT INTO users VALUES (?,?,?, ...);
     public User insertUser(User user){
-        return userRepository.save(user);
+//        Role defaultRole = roleRepository.findById(1).get();
+        Optional<Role> defaultRoleOpt = roleRepository.findFirstByRoleName("ROLE_USER");
+        if(defaultRoleOpt.isPresent()) {
+            Role defaultRole = defaultRoleOpt.get();
+            // do użytkownika przypisuję zbiór zawierający jedną rolę - default
+            user.setRoles(new HashSet<>(Arrays.asList(defaultRole)));
+            return userRepository.save(user);
+        }
+        return null;
     }
     // SELECT * FROM users ORDER BY registration_time DESC;
     public List<User> selectUsers(){
