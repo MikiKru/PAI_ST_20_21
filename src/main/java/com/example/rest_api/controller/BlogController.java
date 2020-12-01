@@ -18,7 +18,8 @@ public class BlogController {
     }
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
-        return "Hello world!";
+        User user = userService.getUserById(3).get();
+        return user.getPassword();
     }
     @GetMapping("/user={userName}&number={number}")
     public String helloMe(

@@ -1,5 +1,6 @@
 package com.example.rest_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -26,6 +27,7 @@ public class User {
     private String lastName;
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     private String password;
     @Column(name = "registration_time")                 // edycja właściwości kolumny
     private LocalDateTime registrationDateTime;
@@ -42,6 +44,10 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnore
+    public String getPassword() {
+        return password;
+    }
 
     public User(String name, String lastName, String email, String password, LocalDateTime registrationDateTime, String description, boolean status) {
         this.name = name;
