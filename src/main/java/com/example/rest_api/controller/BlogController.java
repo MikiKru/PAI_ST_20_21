@@ -1,21 +1,27 @@
 package com.example.rest_api.controller;
 
+import com.example.rest_api.model.Post;
 import com.example.rest_api.model.User;
+import com.example.rest_api.model.dtos.PostDto;
+import com.example.rest_api.service.PostService;
 import com.example.rest_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
 public class BlogController {
-    UserService userService;
+    private UserService userService;
+    private PostService postService;
     @Autowired
-    public BlogController(UserService userService) {
+    public BlogController(UserService userService, PostService postService) {
         this.userService = userService;
+        this.postService = postService;
     }
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(){
         User user = userService.getUserById(3).get();
@@ -52,5 +58,9 @@ public class BlogController {
             @RequestParam("userId") int userId
     ){
         return userService.deleteUserById(userId);
+    }
+    @PostMapping("/posts/publication")
+    public Post addNewPost(@ModelAttribute("postDto") PostDto postDto){
+           return postService.addPost(postDto);
     }
 }
