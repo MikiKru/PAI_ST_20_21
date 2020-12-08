@@ -67,8 +67,8 @@ public class BlogController {
     @PostMapping("/posts/publication")
     public String addNewPost(@Valid @ModelAttribute("postDto") PostDto postDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "Validation Errors: \n" + bindingResult.getAllErrors().stream()
-                    .map(err -> err.getObjectName() + " : " + err.getDefaultMessage())
+            return "Validation Errors: \n" + bindingResult.getFieldErrors().stream()
+                    .map(err -> "field " + err.getField() + " : " + err.getDefaultMessage())
                     .collect(Collectors.joining("\n"));
         }
         if(postDto.getCategory() == null){
