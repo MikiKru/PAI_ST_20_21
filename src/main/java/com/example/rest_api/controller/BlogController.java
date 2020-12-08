@@ -3,6 +3,7 @@ package com.example.rest_api.controller;
 import com.example.rest_api.model.Post;
 import com.example.rest_api.model.User;
 import com.example.rest_api.model.dtos.PostDto;
+import com.example.rest_api.model.enums.Category;
 import com.example.rest_api.service.PostService;
 import com.example.rest_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
@@ -79,5 +81,9 @@ public class BlogController {
         }
         postService.addPost(postDto);
         return "OK";
+    }
+    @GetMapping("/posts/aggregationByCategory")
+    public Map getAggregatedPostsByCategory(){
+        return postService.getAggregatedPostsByCategory();
     }
 }
