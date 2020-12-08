@@ -6,10 +6,13 @@ import com.example.rest_api.model.dtos.PostDto;
 import com.example.rest_api.service.PostService;
 import com.example.rest_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
@@ -60,7 +63,12 @@ public class BlogController {
         return userService.deleteUserById(userId);
     }
     @PostMapping("/posts/publication")
-    public Post addNewPost(@ModelAttribute("postDto") PostDto postDto){
-           return postService.addPost(postDto);
+    public String addNewPost(@Valid @ModelAttribute("postDto") PostDto postDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            Arrays.stream(bindingResult.getSuppressedFields()).forEach(System.out::println);
+            return "Validation Errors";
+        }
+        postService.addPost(postDto);
+        return "OK";
     }
 }
