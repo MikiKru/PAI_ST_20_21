@@ -7,6 +7,7 @@ import com.example.rest_api.service.PostService;
 import com.example.rest_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
 public class BlogController {
@@ -65,8 +67,15 @@ public class BlogController {
     @PostMapping("/posts/publication")
     public String addNewPost(@Valid @ModelAttribute("postDto") PostDto postDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            Arrays.stream(bindingResult.getSuppressedFields()).forEach(System.out::println);
-            return "Validation Errors";
+            return "Validation Errors: \n" + bindingResult.getAllErrors().stream()
+                    .map(err -> err.getObjectName() + " : " + err.getDefaultMessage())
+                    .collect(Collectors.joining("\n"));
+        }
+        if(postDto.getCategory() == null){
+            return "Empty category";
+        }
+        if(!userService.getUserById(postDto.getAuthorId()).isPresent()){
+           return "Invalid author id";
         }
         postService.addPost(postDto);
         return "OK";

@@ -23,7 +23,8 @@ public class PostDto {
     @NotBlank(message = "Content must be not null")
     @Size(min = 255, message = "Content must contain at least {min} characters")
     private String content;
+//    @NotBlank
     private Category category;
-    @NotBlank(message = "Author id must be not null")
+//    @NotBlank(message = "Author id must be not null")
     private int authorId;
 }
