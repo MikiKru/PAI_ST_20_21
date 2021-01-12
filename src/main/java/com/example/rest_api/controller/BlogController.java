@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RequestMapping("/api") // przed każdą metodą musi być wprowadzona w żądaniu ścieżka /api
 @RestController     // adnotacja wykorzystywana do mapowania żądań http
 public class BlogController {
     private UserService userService;
