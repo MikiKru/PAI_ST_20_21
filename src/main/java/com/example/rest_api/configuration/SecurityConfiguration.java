@@ -16,6 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 // żądania wymagające logowania
+                .antMatchers("/").hasAnyAuthority("ROLE_USER")
                 .antMatchers("/users").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .anyRequest().permitAll()
@@ -32,10 +33,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .usersByUsernameQuery("SELECT u.email,u.password,u.status FROM user u WHERE u.email=?")
+                .usersByUsernameQuery("SELECT u.email,u.password,u.status FROM users u WHERE u.email=?")
                 .authoritiesByUsernameQuery(
-                        "SELECT u.email, r.role_name FROM user u JOIN users_to_roles ur ON ur.user_id = u.user_id" +
-                                " JOIN role r ON r.role_id = ur.role_id WHERE u.email=?"
+                        "SELECT u.email, r.role_name FROM users u JOIN users_to_roles ur ON ur.user_id = u.user_id" +
+                                " JOIN roles r ON r.role_id = ur.role_id WHERE u.email=?"
                 )
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder());
