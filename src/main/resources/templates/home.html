@@ -9,5 +9,14 @@
     <h1> Secured area </h1>
     <p th:text="${'email: ' + email}"> email </p>
     <p th:text="${'roles: ' + roles}"> roles </p>
+
+    <div th:each="post : ${posts}">
+        <h2 th:text="${'Title: ' + post.getTitle()}"> title</h2>
+        <p th:text="${'Author: ' + post.getAuthor().getName()}"> author </p>
+        <p th:text="${'Category: ' + post.getCategory().getCategoryName()}"> category </p>
+        <p th:text="${'Published: ' + post.getPublicationTime()}"> date</p>
+        <hr>
+    </div>
+
 </body>
 </html>
