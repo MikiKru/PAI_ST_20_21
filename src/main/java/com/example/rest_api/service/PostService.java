@@ -7,8 +7,10 @@ import com.example.rest_api.model.enums.Category;
 import com.example.rest_api.repository.PostRepository;
 import com.example.rest_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,5 +32,8 @@ public class PostService {
     public Map getAggregatedPostsByCategory(){
         return postRepository.getAggregatedPostsByCategory().stream()
                 .collect(Collectors.toMap(o -> o[0], o -> o[1]));
+    }
+    public List<Post> getAllPosts(){
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "publicationTime"));
     }
 }
