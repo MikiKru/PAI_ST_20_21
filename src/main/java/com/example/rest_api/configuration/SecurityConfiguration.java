@@ -17,8 +17,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests()
                 // żądania wymagające logowania
                 .antMatchers("/").hasAnyAuthority("ROLE_USER")
-                .antMatchers("/users").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                .antMatchers("/api/users").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .anyRequest().permitAll()
                 .and().csrf().disable()
                 .formLogin()

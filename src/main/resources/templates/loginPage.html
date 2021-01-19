@@ -15,5 +15,16 @@
         <input th:type="password" th:placeholder="'input your password'" th:name="password"><br>
         <input th:type="submit" th:value="login">
     </form>
+
+    <h1> Registration form </h1>
+    <form th:action="@{/registration}" th:method="post" th:object="${user}">
+        <input th:type="text" th:field="*{name}" th:placeholder="'input your name'" ><br>
+        <input th:type="text" th:field="*{lastName}" th:placeholder="'input your lastname'" ><br>
+        <input th:type="email" th:field="*{email}" th:placeholder="'input your email'" ><br>
+        <input th:type="password" th:field="*{password}" th:placeholder="'input your password'"><br>
+        <input th:type="textarea" th:field="*{description}"th:placeholder="'input description of your profile'"><br>
+        <input th:type="submit" th:value="register">
+    </form>
+
 </body>
 </html>
