@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.persistence.GeneratedValue;
 import java.time.LocalDateTime;
 
 @Controller     // klasa która mapuje żądania http na metody i zwraca nazwę widoku html
@@ -48,5 +50,9 @@ public class FrontEndController {
         user.setStatus(true);
         userService.insertUser(user);
         return "redirect:/login";       // przekierowanie na adres metodą GET
+    }
+    @GetMapping("/posts/{postId}")
+    public String getPost(@PathVariable("postId") int postId){
+        return null;
     }
 }
