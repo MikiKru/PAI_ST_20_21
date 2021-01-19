@@ -22,9 +22,11 @@ public class FrontEndController {
     }
 
     @GetMapping("/")
-    public String home(Authentication auth){
+    public String home(Model model, Authentication auth){
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         System.out.println("Logging credentials: " + userDetails);
+        model.addAttribute("email", userDetails.getUsername());
+        model.addAttribute("roles", userDetails.getAuthorities());
         return "home";
     }
     @GetMapping("/login")
